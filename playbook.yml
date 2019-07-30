@@ -1,0 +1,47 @@
+---
+- hosts: opencv
+  gather_facts: yes
+  remote_user: pi
+  become: yes
+  tasks:
+  - name: Remove useless packages from the cache
+    apt:
+      autoclean: yes
+
+  - name: Remove dependencies that are no longer required
+    apt:
+      autoremove: yes
+
+  - name: Remove wolfram-engine
+    apt:
+      name: wolfram-engine
+      state: absent
+
+  - name: Remove libreoffice*
+    apt:
+      name: libreoffice*
+      state: absent
+
+  - name: Install dependencies
+    apt:
+        name: "{{ packages }}"
+    vars:
+      packages:
+        - build-essential
+        - cmake
+        - unzip
+        - pkg-config
+        - libjpeg-dev
+        - libpng-dev
+        - libtiff-dev
+        - libavcodec-dev
+        - libavformat-dev
+        - libswscale-dev
+        - libv4l-dev
+        - libxvidcore-dev
+        - libx264-dev
+        - libgtk-3-dev
+        - libcanberra-gtk*
+        - libatlas-base-dev
+        - gfortran
+        - python3-dev
